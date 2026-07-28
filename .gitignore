@@ -1,0 +1,45 @@
+# ═══════════════════════════════════════════════════════════
+#  Real_RAM_cooler — .gitignore
+#  Regel Nr. 1: KEINE Binärdateien ins Repo (Ausnahme: icon.ico,
+#  das braucht der Build). Releases laufen über GitHub Releases.
+# ═══════════════════════════════════════════════════════════
+
+# ── PyInstaller-Build-Ausgaben ──
+build/
+dist/
+*.spec
+
+# ── Inno-Setup-Ausgabe ──
+installer/
+Output/
+
+# ── Fertige Pakete (gehören in GitHub Releases, nicht ins Repo) ──
+*.zip
+*.7z
+
+# ── Laufzeit-Dateien: legt die App selbst neben der .exe an ──
+config.json
+*.log
+
+# ── Python-Krümel ──
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# ── Editor / IDE ──
+.vscode/
+.idea/
+
+# ── Windows-Müll ──
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+*.tmp
+*.bak
+
+# ── Sicherheitsnetz: schwere/riskante Dateitypen ──
+*.exe
+*.msi
+*.dll
