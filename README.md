@@ -6,6 +6,8 @@
 
 ![Ice Blue Neon](https://img.shields.io/badge/Theme-Ice_Blue_Neon-66e0ff) ![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-3b82c4) ![Python](https://img.shields.io/badge/Python-3.9%2B-2b8fb3) ![Languages](https://img.shields.io/badge/Languages-EN%20%7C%20DE-8fd3f4) ![License](https://img.shields.io/badge/License-MIT-6ee7b7)
 
+<img src="assets/screenshot-en.png" alt="Real_RAM_cooler dashboard: RAM bar (in use / standby / truly free), top 12 RAM hogs with the Touches vs. Owns columns" width="480">
+
 ---
 
 ## What it does — and what it doesn't

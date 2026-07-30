@@ -6,6 +6,8 @@
 
 ![Eisblau Neon](https://img.shields.io/badge/Theme-Eisblau_Neon-66e0ff) ![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-3b82c4) ![Python](https://img.shields.io/badge/Python-3.9%2B-2b8fb3) ![Sprachen](https://img.shields.io/badge/Sprachen-DE%20%7C%20EN-8fd3f4) ![Lizenz](https://img.shields.io/badge/Lizenz-MIT-6ee7b7)
 
+<img src="assets/screenshot-de.png" alt="Real_RAM_cooler-Dashboard: RAM-Balken (in Benutzung / Standby / wirklich frei), Top-12 RAM-Fresser mit den Spalten Berührt und Besitzt" width="480">
+
 ---
 
 ## Was es macht — und was nicht

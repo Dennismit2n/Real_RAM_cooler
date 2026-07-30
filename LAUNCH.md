@@ -604,6 +604,13 @@ So wird es echt statt gestellt:
 
 Farblich läuft alles über Eisblau-Neon auf Nachtblau (#66e0ff auf #0b111a). Ein helles Schema gibt es nicht zu fotografieren, und das ist hier ein Vorteil: Die Bilder sehen zwischen Instagram-Kacheln nach Werkzeug aus und nicht nach Formular.
 
+### Schon im Kasten (Stand 2026-07-30, v1.2)
+
+- `assets/screenshot-de.png` — Dashboard auf Deutsch (610×770, echte Prozessliste, Standby 1.913 MB, Eigenverbrauch 10 MB)
+- `assets/screenshot-en.png` — dasselbe Dashboard auf Englisch (seit v1.2 kann die App das; Standby 2.253 MB, Eigenverbrauch 8 MB)
+
+Beide sind der ruhige Grundzustand **ohne** Erfolgsbanner — sie taugen für Foren-Posts, README und überall, wo das Werkzeug nüchtern gezeigt wird. Die englische Fassung öffnet die internationalen Auftritte (Show HN, r/pcgaming), die bisher nur deutsche Bilder gehabt hätten. **Noch zu schießen** bleiben die drei Hero-Motive oben: das Banner-Bild mit krummen Zahlen (Motiv 1), das Placebo-Paar mit Task-Manager (Motiv 2, DAS Teil-Bild) und das Tray-Menü (Motiv 3).
+
 ---
 
 ## Was ich bewusst nicht geschrieben habe
