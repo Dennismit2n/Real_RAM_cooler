@@ -301,7 +301,7 @@ Der wichtigste Text von allen: Bei einem unsignierten Windows-Installer entschei
 >
 > MIT-Lizenz. Über Kritik an der Bauart freue ich mich, besonders wenn jemand den Fallback auf Private Bytes oder die PDH-Zähler auseinandernimmt.
 
-(3 242 Zeichen)
+(3 230 Zeichen)
 
 ---
 
