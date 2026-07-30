@@ -50,10 +50,13 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; \
     Tasks: desktopicon
 
 [Run]
-; "Real_RAM_cooler jetzt starten"-Häkchen am Ende des Setups:
+; "Real_RAM_cooler jetzt starten"-Häkchen am Ende des Setups.
+; runascurrentuser ist Pflicht: postinstall startet sonst als
+; NICHT-erhöhter Original-Benutzer, und die App verlangt Admin
+; (--uac-admin im Manifest) -> CreateProcess-Fehler 740.
 Filename: "{app}\{#MyAppExeName}"; \
     Description: "{cm:LaunchProgram,{#MyAppName}}"; \
-    Flags: nowait postinstall skipifsilent
+    Flags: nowait postinstall skipifsilent runascurrentuser
 
 [UninstallRun]
 ; Sauber gehen: die Autostart-Aufgabe mit abräumen (falls gesetzt).
