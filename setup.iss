@@ -1,11 +1,11 @@
 ; ═══════════════════════════════════════════════════════════════════
 ;  Real_RAM_cooler — Installer-Skript für Inno Setup 6  ❄
 ;  Kompilieren: Datei in Inno Setup öffnen → Build → Compile (Strg+F9)
-;  Ergebnis:    installer\Real_RAM_cooler_Setup_v1.1.exe
+;  Ergebnis:    installer\Real_RAM_cooler_Setup_v1.2.exe
 ; ═══════════════════════════════════════════════════════════════════
 
 #define MyAppName "Real_RAM_cooler"
-#define MyAppVersion "1.1"
+#define MyAppVersion "1.2"
 #define MyAppPublisher "Dennis"
 #define MyAppExeName "Real_RAM_cooler.exe"
 
@@ -32,6 +32,8 @@ PrivilegesRequired=admin
 ArchitecturesInstallIn64BitMode=x64compatible
 
 [Languages]
+; Installer folgt der Windows-Sprache (Englisch als Standard/Fallback):
+Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "german"; MessagesFile: "compiler:Languages\German.isl"
 
 [Tasks]

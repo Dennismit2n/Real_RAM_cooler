@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Real_RAM_cooler v1.1  ❄  Eisblau Neon
+Real_RAM_cooler v1.2  ❄  Eisblau Neon
 =====================================
 Ein ehrliches RAM-Tool für Windows.
 
@@ -49,7 +49,7 @@ from pystray import MenuItem as TrayItem, Menu as TrayMenu
 from PIL import Image, ImageDraw
 
 APP_NAME = "Real_RAM_cooler"
-VERSION = "1.1"
+VERSION = "1.2"
 TASK_NAME = "Real_RAM_cooler_Autostart"
 
 # ═════════════════════════════════════════════════════════════════════
@@ -96,6 +96,7 @@ DEFAULT_CFG = {
     "overlay_x": 60,
     "overlay_y": 60,
     "autostart": False,           # via Task Scheduler (RL HIGHEST)
+    "language": "auto",           # "auto" (Windows-Sprache) | "de" | "en"
 }
 
 def load_cfg():
@@ -115,6 +116,164 @@ def save_cfg(cfg):
         print("Konfig speichern fehlgeschlagen:", e)
 
 CFG = load_cfg()
+
+# ═════════════════════════════════════════════════════════════════════
+#  SPRACHEN — Deutsch + Englisch (handpoliert, inkl. Wortwitz).
+#  Start folgt der Windows-Anzeigesprache; in den Einstellungen
+#  umschaltbar (config.json: "language": "auto" | "de" | "en").
+# ═════════════════════════════════════════════════════════════════════
+
+L = {
+    "de": {
+        "adminOk": "Admin ✓",
+        "adminNo": "kein Admin — nur Anzeige",
+        "btnReal": "🎮  Fürs Gaming bereinigen",
+        "btnPlacebo": "✨ Placebo",
+        "tipPlacebo": ("Trimmt Working-Sets: macht die Zahlen im Task-Manager "
+                       "hübsch, den PC nicht schneller. Windows schiebt alles in "
+                       "Memory Compression und holt es zurück. Ehrenwort. 😉"),
+        "topList": "Top-12 RAM-Fresser",
+        "colProcess": "Prozess",
+        "colCount": "Anz.",
+        "colTouched": "Berührt",
+        "colOwns": "Besitzt",
+        "cookbook": ("🍳 „Berührt“ = alles, was der Prozess nutzt — inklusive "
+                     "dem geteilten Kochbuch auf dem WG-Tisch (DLLs). "
+                     "„Besitzt“ = nur seine eigenen Seiten (die Task-Manager-Zahl)."),
+        "ex2Fallback": ("* Dieses Windows liefert kein privates Working Set — "
+                        "Anzeige: Private Bytes (Commit)."),
+        "selfUse": ("Eigenverbrauch: {mb} MB — ein RAM-Tool sollte selbst "
+                    "keins fressen. 😉"),
+        "legendFull": ("● In Benutzung {used}   ● Standby {stby}   "
+                       "● Wirklich frei {free}   (gesamt {total})"),
+        "legendNoPdh": ("● In Benutzung {used}   ● Verfügbar {avail}   "
+                        "(Standby-Zähler nicht verfügbar)"),
+        "ovFull": "❄ Frei {free} · Standby {stby}",
+        "ovNoPdh": "❄ Verfügbar {avail}",
+        "realDone": ("🎮 Standby-Liste geleert: {before} → {after} ✓  "
+                     "({freed} fürs Spiel freigeräumt)"),
+        "realDoneNoMeasure": "🎮 Standby-Liste geleert ✓ (Messung nicht verfügbar)",
+        "realFail": "Leeren fehlgeschlagen — fehlen Admin-Rechte?",
+        "notifyRealTitle": "Bereit fürs Gaming 🎮",
+        "placeboDone": ("✨ Zahlen poliert: {n} Prozesse getrimmt, {delta} "
+                        "„befreit“. Gefühlt schneller: 100 %. Messbar schneller: 0 %. "
+                        "(Windows räumt’s gleich zurück — grüß mir Memory "
+                        "Compression. 😉)"),
+        "needAdmin": ("Ohne Admin-Rechte erlaubt Windows das Leeren der "
+                      "Standby-Liste nicht. Bitte die App als Administrator "
+                      "starten."),
+        "autoTitle": "Automatik ❄",
+        "autoNotify": "Standby geleert: {before} → {after} ({freed} frei)",
+        "autoBanner": "❄ Automatik: Standby {before} → {after} ✓",
+        "trayDashboard": "Dashboard öffnen",
+        "trayReal": "🎮 Fürs Gaming bereinigen",
+        "trayPlacebo": "✨ Placebo-Modus",
+        "traySettings": "⚙ Einstellungen",
+        "trayQuit": "Beenden",
+        "setTitle": "Einstellungen ❄",
+        "secAuto": "Automatik (ISLC-Stil)",
+        "chkAuto": "Automatisch leeren, wenn beide Schwellwerte reißen",
+        "sliderStandby": "leeren wenn Standby größer als",
+        "sliderFree": "und wirklich frei kleiner als",
+        "secOverlay": "Overlay",
+        "chkOverlay": "Schwebendes Mini-Overlay anzeigen (ziehbar)",
+        "secAutostart": "Autostart",
+        "chkAutostart": ("Mit Windows starten (Aufgabenplanung, ohne "
+                         "UAC-Abfrage beim Hochfahren)"),
+        "taskErr": "Aufgabenplanung meldet:\n{err}",
+        "unknownErr": "unbekannter Fehler",
+        "adminHint": ("Hinweis: Die App braucht Admin-Rechte, weil Windows "
+                      "das Leeren der Standby-Liste nur so erlaubt."),
+        "secLang": "Sprache / Language",
+        "langAuto": "Auto (Windows)",
+        "langSaved": "Sprache gespeichert — gilt ab dem nächsten Start der App.",
+        "alreadyRunning": "läuft bereits (Blick ins Tray ❄).",
+        "niceDwm": "dwm (Desktopfenster)",
+    },
+    "en": {
+        "adminOk": "Admin ✓",
+        "adminNo": "no admin — view only",
+        "btnReal": "🎮  Clean up for gaming",
+        "btnPlacebo": "✨ Placebo",
+        "tipPlacebo": ("Trims working sets: makes the Task Manager numbers "
+                       "pretty, not your PC faster. Windows shoves it all into "
+                       "Memory Compression and takes it right back. "
+                       "Scout's honor. 😉"),
+        "topList": "Top 12 RAM hogs",
+        "colProcess": "Process",
+        "colCount": "Cnt",
+        "colTouched": "Touches",
+        "colOwns": "Owns",
+        "cookbook": ("🍳 “Touches” = everything the process uses — including "
+                     "the shared cookbook on the kitchen table (DLLs). "
+                     "“Owns” = only its own pages (the Task Manager number)."),
+        "ex2Fallback": ("* This Windows build doesn't report private working "
+                        "sets — showing Private Bytes (commit) instead."),
+        "selfUse": ("Own footprint: {mb} MB — a RAM tool shouldn't hog any "
+                    "itself. 😉"),
+        "legendFull": ("● In use {used}   ● Standby {stby}   "
+                       "● Truly free {free}   (total {total})"),
+        "legendNoPdh": ("● In use {used}   ● Available {avail}   "
+                        "(standby counters unavailable)"),
+        "ovFull": "❄ Free {free} · Standby {stby}",
+        "ovNoPdh": "❄ Available {avail}",
+        "realDone": ("🎮 Standby list purged: {before} → {after} ✓  "
+                     "({freed} cleared for your game)"),
+        "realDoneNoMeasure": "🎮 Standby list purged ✓ (measurement unavailable)",
+        "realFail": "Purge failed — missing admin rights?",
+        "notifyRealTitle": "Ready for gaming 🎮",
+        "placeboDone": ("✨ Numbers polished: {n} processes trimmed, {delta} "
+                        "“freed”. Feels faster: 100%. Measurably faster: 0%. "
+                        "(Windows puts it all back in a second — say hi to "
+                        "Memory Compression. 😉)"),
+        "needAdmin": ("Without admin rights Windows won't allow purging the "
+                      "standby list. Please run the app as administrator."),
+        "autoTitle": "Automatic ❄",
+        "autoNotify": "Standby purged: {before} → {after} ({freed} free)",
+        "autoBanner": "❄ Automatic: standby {before} → {after} ✓",
+        "trayDashboard": "Open dashboard",
+        "trayReal": "🎮 Clean up for gaming",
+        "trayPlacebo": "✨ Placebo mode",
+        "traySettings": "⚙ Settings",
+        "trayQuit": "Quit",
+        "setTitle": "Settings ❄",
+        "secAuto": "Automatic (ISLC style)",
+        "chkAuto": "Purge automatically when both thresholds are crossed",
+        "sliderStandby": "purge when standby exceeds",
+        "sliderFree": "and truly free is below",
+        "secOverlay": "Overlay",
+        "chkOverlay": "Show floating mini overlay (draggable)",
+        "secAutostart": "Autostart",
+        "chkAutostart": ("Start with Windows (Task Scheduler, no UAC prompt "
+                         "at boot)"),
+        "taskErr": "Task Scheduler says:\n{err}",
+        "unknownErr": "unknown error",
+        "adminHint": ("Note: the app needs admin rights because Windows only "
+                      "allows purging the standby list that way."),
+        "secLang": "Sprache / Language",
+        "langAuto": "Auto (Windows)",
+        "langSaved": "Language saved — takes effect the next time the app starts.",
+        "alreadyRunning": "is already running (check the tray ❄).",
+        "niceDwm": "dwm (desktop windows)",
+    },
+}
+
+def detect_lang():
+    pref = CFG.get("language", "auto")
+    if pref in L:
+        return pref
+    try:  # 0x07 = LANG_GERMAN (primäre Sprach-ID der Windows-Anzeigesprache)
+        langid = ctypes.windll.kernel32.GetUserDefaultUILanguage()
+        return "de" if (langid & 0x3FF) == 0x07 else "en"
+    except Exception:
+        return "en"
+
+LANG = detect_lang()
+
+def t(key, **kw):
+    table = L.get(LANG) or L["en"]
+    s = table.get(key) or L["en"].get(key, key)
+    return s.format(**kw) if kw else s
 
 # ═════════════════════════════════════════════════════════════════════
 #  WINDOWS-API-SCHICHT (ctypes) — hier passiert das Echte
@@ -427,7 +586,7 @@ def _enum_pids():
 _NICE_NAMES = {
     "memcompression": "Memory Compression",
     "msmpeng": "MsMpEng (Defender)",
-    "dwm": "dwm (Desktopfenster)",
+    "dwm": t("niceDwm"),
 }
 
 def list_top_processes(n=12):
@@ -532,11 +691,17 @@ def set_autostart(enabled: bool):
 # ═════════════════════════════════════════════════════════════════════
 
 def fmt_mb(b):
-    """Bytes → 'X.XXX MB' (deutsches Tausenderformat)."""
-    return f"{b / (1024 * 1024):,.0f}".replace(",", ".") + " MB"
+    """Bytes → 'X.XXX MB' (Tausendertrennung je nach Sprache)."""
+    s = f"{b / (1024 * 1024):,.0f}"
+    if LANG == "de":
+        s = s.replace(",", ".")
+    return s + " MB"
 
 def fmt_gb(b):
-    return f"{b / (1024 ** 3):.1f}".replace(".", ",") + " GB"
+    s = f"{b / (1024 ** 3):.1f}"
+    if LANG == "de":
+        s = s.replace(".", ",")
+    return s + " GB"
 
 class Tooltip:
     """Winziger Tooltip fürs ehrliche Placebo-Label."""
@@ -620,7 +785,7 @@ class RealRAMCooler:
                  bg=C_BG, fg=C_ACCENT).pack(side="left")
         self.lbl_admin = tk.Label(
             head,
-            text="Admin ✓" if self.admin else "kein Admin — nur Anzeige",
+            text=t("adminOk") if self.admin else t("adminNo"),
             font=FONT_SMALL, bg=C_BG,
             fg=C_GOOD if self.admin else C_WARN)
         self.lbl_admin.pack(side="right")
@@ -646,7 +811,7 @@ class RealRAMCooler:
         btns.pack(fill="x", pady=(4, 8), **pad)
 
         self.btn_real = tk.Button(
-            btns, text="🎮  Fürs Gaming bereinigen",
+            btns, text=t("btnReal"),
             font=FONT_BOLD, bg=C_ACCENT, fg=C_BG,
             activebackground=C_ACCENT_D, activeforeground=C_TEXT,
             relief="flat", cursor="hand2", padx=14, pady=7,
@@ -654,17 +819,14 @@ class RealRAMCooler:
         self.btn_real.pack(side="left")
 
         self.btn_placebo = tk.Button(
-            btns, text="✨ Placebo",
+            btns, text=t("btnPlacebo"),
             font=FONT, bg=C_PANEL, fg=C_ACCENT,
             activebackground=C_PANEL2, activeforeground=C_ACCENT,
             relief="flat", cursor="hand2", padx=12, pady=7,
             highlightthickness=1, highlightbackground=C_ACCENT_D,
             command=self.do_placebo)
         self.btn_placebo.pack(side="left", padx=(10, 0))
-        Tooltip(self.btn_placebo,
-                "Trimmt Working-Sets: macht die Zahlen im Task-Manager "
-                "hübsch, den PC nicht schneller. Windows schiebt alles in "
-                "Memory Compression und holt es zurück. Ehrenwort. 😉")
+        Tooltip(self.btn_placebo, t("tipPlacebo"))
 
         tk.Button(btns, text="⚙", font=("Segoe UI", 12), bg=C_PANEL,
                   fg=C_TEXT, activebackground=C_PANEL2,
@@ -680,7 +842,7 @@ class RealRAMCooler:
         tablebox = tk.Frame(self.root, bg=C_PANEL, highlightthickness=1,
                             highlightbackground=C_ACCENT_D)
         tablebox.pack(fill="both", expand=True, pady=(2, 6), **pad)
-        tk.Label(tablebox, text="Top-12 RAM-Fresser", font=FONT_BOLD,
+        tk.Label(tablebox, text=t("topList"), font=FONT_BOLD,
                  bg=C_PANEL, fg=C_TEXT).pack(anchor="w", padx=10,
                                              pady=(8, 2))
         self.table = tk.Frame(tablebox, bg=C_PANEL)
@@ -689,9 +851,7 @@ class RealRAMCooler:
         # Fußnoten: Kochbuch 🍳 + Eigenverbrauch
         self.lbl_cookbook = tk.Label(
             self.root,
-            text=("🍳 „Berührt“ = alles, was der Prozess nutzt — inklusive "
-                  "dem geteilten Kochbuch auf dem WG-Tisch (DLLs). "
-                  "„Besitzt“ = nur seine eigenen Seiten (die Task-Manager-Zahl)."),
+            text=t("cookbook"),
             font=FONT_SMALL, bg=C_BG, fg=C_MUTED, wraplength=520,
             justify="left")
         self.lbl_cookbook.pack(fill="x", pady=(0, 2), **pad)
@@ -749,13 +909,13 @@ class RealRAMCooler:
             return wrapper
 
         menu = TrayMenu(
-            TrayItem("Dashboard öffnen", q(self.show_dashboard),
+            TrayItem(t("trayDashboard"), q(self.show_dashboard),
                      default=True),
-            TrayItem("🎮 Fürs Gaming bereinigen", q(self.do_real_clean)),
-            TrayItem("✨ Placebo-Modus", q(self.do_placebo)),
+            TrayItem(t("trayReal"), q(self.do_real_clean)),
+            TrayItem(t("trayPlacebo"), q(self.do_placebo)),
             TrayMenu.SEPARATOR,
-            TrayItem("⚙ Einstellungen", q(self.open_settings)),
-            TrayItem("Beenden", q(self.quit_app)),
+            TrayItem(t("traySettings"), q(self.open_settings)),
+            TrayItem(t("trayQuit"), q(self.quit_app)),
         )
         self.tray = pystray.Icon(APP_NAME, make_icon_image(64),
                                  f"{APP_NAME} ❄", menu=menu)
@@ -780,10 +940,7 @@ class RealRAMCooler:
     def do_real_clean(self):
         """DAS ECHTE: Standby-Liste leeren, mit Vorher/Nachher."""
         if not self.admin:
-            messagebox.showwarning(APP_NAME,
-                "Ohne Admin-Rechte erlaubt Windows das Leeren der "
-                "Standby-Liste nicht. Bitte die App als Administrator "
-                "starten.")
+            messagebox.showwarning(APP_NAME, t("needAdmin"))
             return
         before = get_standby_bytes()
         ok = purge_standby_list()
@@ -793,17 +950,14 @@ class RealRAMCooler:
         if ok:
             if before is not None and after is not None:
                 freed = max(0, before - after)
-                text = (f"🎮 Standby-Liste geleert: {fmt_mb(before)} → "
-                        f"{fmt_mb(after)} ✓  ({fmt_mb(freed)} fürs Spiel "
-                        f"freigeräumt)")
+                text = t("realDone", before=fmt_mb(before),
+                         after=fmt_mb(after), freed=fmt_mb(freed))
             else:
-                text = "🎮 Standby-Liste geleert ✓ (Messung nicht verfügbar)"
+                text = t("realDoneNoMeasure")
             self.set_banner(text, C_GOOD)
-            self.notify("Bereit fürs Gaming 🎮",
-                        text.replace("🎮 ", ""))
+            self.notify(t("notifyRealTitle"), text.replace("🎮 ", ""))
         else:
-            self.set_banner("Leeren fehlgeschlagen — fehlen Admin-Rechte?",
-                            C_WARN)
+            self.set_banner(t("realFail"), C_WARN)
         self.refresh_now()
 
     def do_placebo(self):
@@ -816,11 +970,7 @@ class RealRAMCooler:
         time.sleep(0.25)
         _, avail_after = get_memory_status()
         delta = max(0, avail_after - avail_before)
-        self.set_banner(
-            f"✨ Zahlen poliert: {n} Prozesse getrimmt, {fmt_mb(delta)} "
-            f"„befreit“. Gefühlt schneller: 100 %. Messbar schneller: 0 %. "
-            f"(Windows räumt’s gleich zurück — grüß mir Memory "
-            f"Compression. 😉)", C_ACCENT)
+        self.set_banner(t("placeboDone", n=n, delta=fmt_mb(delta)), C_ACCENT)
         self.refresh_now()
 
     def set_banner(self, text, color):
@@ -853,9 +1003,9 @@ class RealRAMCooler:
             self._settings.lift()
             return
         w = self._settings = tk.Toplevel(self.root)
-        w.title("Einstellungen ❄")
+        w.title(t("setTitle"))
         w.configure(bg=C_BG)
-        w.geometry("500x460")
+        w.geometry("500x560")
         w.resizable(False, False)
         pad = {"padx": 16}
 
@@ -880,9 +1030,8 @@ class RealRAMCooler:
             return var
 
         # Automatik (ISLC-Stil)
-        sec("Automatik (ISLC-Stil)")
-        check("Automatisch leeren, wenn beide Schwellwerte reißen",
-              "auto_clean")
+        sec(t("secAuto"))
+        check(t("chkAuto"), "auto_clean")
 
         def slider(text, key, lo, hi):
             row = tk.Frame(w, bg=C_BG)
@@ -903,23 +1052,20 @@ class RealRAMCooler:
             s.pack(side="right")
             upd(CFG[key])
 
-        slider("leeren wenn Standby größer als", "standby_threshold_mb",
-               256, 4096)
-        slider("und wirklich frei kleiner als", "free_threshold_mb",
-               256, 4096)
+        slider(t("sliderStandby"), "standby_threshold_mb", 256, 4096)
+        slider(t("sliderFree"), "free_threshold_mb", 256, 4096)
 
         # Overlay
-        sec("Overlay")
+        sec(t("secOverlay"))
         def toggle_overlay(on):
             if on:
                 self.overlay.deiconify()
             else:
                 self.overlay.withdraw()
-        check("Schwebendes Mini-Overlay anzeigen (ziehbar)", "overlay",
-              toggle_overlay)
+        check(t("chkOverlay"), "overlay", toggle_overlay)
 
         # Autostart
-        sec("Autostart")
+        sec(t("secAutostart"))
         CFG["autostart"] = autostart_enabled()   # echten Zustand spiegeln
         def toggle_autostart(on):
             ok, err = set_autostart(on)
@@ -927,14 +1073,33 @@ class RealRAMCooler:
                 CFG["autostart"] = not on
                 save_cfg(CFG)
                 messagebox.showerror(APP_NAME,
-                    f"Aufgabenplanung meldet:\n{err or 'unbekannter Fehler'}")
+                    t("taskErr", err=err or t("unknownErr")))
                 w.lift()
-        check("Mit Windows starten (Aufgabenplanung, ohne UAC-Abfrage "
-              "beim Hochfahren)", "autostart", toggle_autostart)
+        check(t("chkAutostart"), "autostart", toggle_autostart)
 
-        tk.Label(w, text=("Hinweis: Die App braucht Admin-Rechte, weil "
-                          "Windows das Leeren der Standby-Liste nur so "
-                          "erlaubt."),
+        # Sprache / Language
+        sec(t("secLang"))
+        lang_var = tk.StringVar(value=CFG.get("language", "auto"))
+        lang_row = tk.Frame(w, bg=C_BG)
+        lang_row.pack(anchor="w", **pad)
+
+        def on_lang_change():
+            CFG["language"] = lang_var.get()
+            save_cfg(CFG)
+            messagebox.showinfo(APP_NAME, t("langSaved"))
+            w.lift()
+
+        for val, label in ((("auto"), t("langAuto")),
+                           ("de", "Deutsch"), ("en", "English")):
+            tk.Radiobutton(lang_row, text=label, value=val,
+                           variable=lang_var, font=FONT, bg=C_BG,
+                           fg=C_TEXT, selectcolor=C_PANEL,
+                           activebackground=C_BG,
+                           activeforeground=C_ACCENT,
+                           command=on_lang_change
+                           ).pack(side="left", padx=(0, 12))
+
+        tk.Label(w, text=t("adminHint"),
                  font=FONT_SMALL, bg=C_BG, fg=C_MUTED, wraplength=420,
                  justify="left").pack(anchor="w", pady=(16, 0), **pad)
 
@@ -944,9 +1109,7 @@ class RealRAMCooler:
         self._draw_bar()
         self._draw_table()
         self._draw_overlay()
-        self.lbl_self.configure(
-            text=f"Eigenverbrauch: {own_memory_mb():.0f} MB — ein "
-                 f"RAM-Tool sollte selbst keins fressen. 😉")
+        self.lbl_self.configure(text=t("selfUse", mb=f"{own_memory_mb():.0f}"))
 
     def _read_stats(self):
         self.total, self.avail = get_memory_status()
@@ -972,22 +1135,19 @@ class RealRAMCooler:
             x += seg
 
         if self.standby is not None:
-            legend = (f"● In Benutzung {fmt_gb(used)}   "
-                      f"● Standby {fmt_mb(stby)}   "
-                      f"● Wirklich frei {fmt_gb(free)}   "
-                      f"(gesamt {fmt_gb(total)})")
+            legend = t("legendFull", used=fmt_gb(used), stby=fmt_mb(stby),
+                       free=fmt_gb(free), total=fmt_gb(total))
         else:
-            legend = (f"● In Benutzung {fmt_gb(used)}   "
-                      f"● Verfügbar {fmt_gb(self.avail)}   "
-                      f"(Standby-Zähler nicht verfügbar)")
+            legend = t("legendNoPdh", used=fmt_gb(used),
+                       avail=fmt_gb(self.avail))
         self.lbl_legend.configure(text=legend)
 
     def _draw_table(self):
         for child in self.table.winfo_children():
             child.destroy()
 
-        priv_head = "Besitzt" if EX2_SUPPORTED else "Besitzt*"
-        headers = ("Prozess", "Anz.", "Berührt", priv_head)
+        priv_head = t("colOwns") if EX2_SUPPORTED else t("colOwns") + "*"
+        headers = (t("colProcess"), t("colCount"), t("colTouched"), priv_head)
         widths  = (24, 5, 10, 10)
         for col, (txt, wd) in enumerate(zip(headers, widths)):
             tk.Label(self.table, text=txt, font=FONT_BOLD, bg=C_PANEL,
@@ -1010,8 +1170,7 @@ class RealRAMCooler:
 
         if EX2_SUPPORTED is False:
             tk.Label(self.table,
-                     text="* Dieses Windows liefert kein privates "
-                          "Working Set — Anzeige: Private Bytes (Commit).",
+                     text=t("ex2Fallback"),
                      font=FONT_SMALL, bg=C_PANEL, fg=C_MUTED
                      ).grid(row=13, column=0, columnspan=4, sticky="w",
                             pady=(4, 0))
@@ -1022,11 +1181,11 @@ class RealRAMCooler:
         if self.standby is not None:
             free = self.avail - min(self.standby, self.avail)
             self.lbl_overlay.configure(
-                text=f"❄ Frei {fmt_gb(free)} · Standby "
-                     f"{fmt_mb(self.standby)}")
+                text=t("ovFull", free=fmt_gb(free),
+                       stby=fmt_mb(self.standby)))
         else:
             self.lbl_overlay.configure(
-                text=f"❄ Verfügbar {fmt_gb(self.avail)}")
+                text=t("ovNoPdh", avail=fmt_gb(self.avail)))
 
     # ── Der Herzschlag: alle 3 s ─────────────────────────────────────
     def _tick(self):
@@ -1047,8 +1206,7 @@ class RealRAMCooler:
                 self._draw_bar()
                 self._draw_table()
                 self.lbl_self.configure(
-                    text=f"Eigenverbrauch: {own_memory_mb():.0f} MB — ein "
-                         f"RAM-Tool sollte selbst keins fressen. 😉")
+                    text=t("selfUse", mb=f"{own_memory_mb():.0f}"))
         except Exception as e:
             print("Anzeige-Update fehlgeschlagen:", e)
 
@@ -1074,12 +1232,12 @@ class RealRAMCooler:
                         time.sleep(0.2)
                         after = get_standby_bytes() or 0
                         freed = max(0, before - after)
-                        self.notify("Automatik ❄",
-                                    f"Standby geleert: {fmt_mb(before)} → "
-                                    f"{fmt_mb(after)} ({fmt_mb(freed)} frei)")
+                        self.notify(t("autoTitle"),
+                                    t("autoNotify", before=fmt_mb(before),
+                                      after=fmt_mb(after), freed=fmt_mb(freed)))
                         self.set_banner(
-                            f"❄ Automatik: Standby {fmt_mb(before)} → "
-                            f"{fmt_mb(after)} ✓", C_GOOD)
+                            t("autoBanner", before=fmt_mb(before),
+                              after=fmt_mb(after)), C_GOOD)
         except Exception as e:
             print("Automatik-Fehler:", e)
 
@@ -1148,7 +1306,7 @@ def main():
     ERROR_ALREADY_EXISTS = 183
     if ctypes.get_last_error() == ERROR_ALREADY_EXISTS:
         ctypes.windll.user32.MessageBoxW(
-            None, f"{APP_NAME} läuft bereits (Blick ins Tray ❄).",
+            None, f"{APP_NAME} " + t("alreadyRunning"),
             APP_NAME, 0x40)
         sys.exit(0)
 

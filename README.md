@@ -1,83 +1,87 @@
 # Real_RAM_cooler ❄
 
-**Ein ehrliches RAM-Tool für Windows.** Leert die Standby-Liste mit demselben Mechanismus wie RAMMap und ISLC — das Einzige, was gegen Gaming-Stutter durch vollgelaufenen Speicher-Cache wirklich hilft. Kein Zauber, kein „Boost", keine Versprechen, die Windows nicht halten kann.
+🇩🇪 **[Deutsche Version → README.de.md](README.de.md)**
 
-![Eisblau Neon](https://img.shields.io/badge/Theme-Eisblau_Neon-66e0ff) ![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-3b82c4) ![Python](https://img.shields.io/badge/Python-3.9%2B-2b8fb3) ![Lizenz](https://img.shields.io/badge/Lizenz-MIT-6ee7b7)
+**An honest RAM tool for Windows.** Purges the standby list using the same mechanism as RAMMap and ISLC — the only thing that actually helps against gaming stutter caused by a bloated memory cache. No magic, no "boost", no promises Windows can't keep.
+
+![Ice Blue Neon](https://img.shields.io/badge/Theme-Ice_Blue_Neon-66e0ff) ![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-3b82c4) ![Python](https://img.shields.io/badge/Python-3.9%2B-2b8fb3) ![Languages](https://img.shields.io/badge/Languages-EN%20%7C%20DE-8fd3f4) ![License](https://img.shields.io/badge/License-MIT-6ee7b7)
 
 ---
 
-## Was es macht — und was nicht
+## What it does — and what it doesn't
 
 | | |
 |---|---|
-| 🎮 **Fürs Gaming bereinigen** | Leert die Windows-Standby-Liste über die native API (`NtSetSystemInformation`). Das ist der echte ISLC/RAMMap-Mechanismus — hilft real gegen Mikroruckler, wenn sich der Standby-Cache nach langen Sessions aufgebläht hat. |
-| ✨ **Placebo-Modus** | Trimmt Working-Sets aller Prozesse. Macht die Zahlen im Task-Manager hübsch, den PC **nicht** schneller — Windows schiebt alles in Memory Compression und holt es zurück. Ist als Gag eingebaut und ehrlich beschriftet, weil 95 % der „RAM-Booster" da draußen genau *das* als Feature verkaufen. |
-| ❄ **Automatik (ISLC-Stil)** | Optional: leert automatisch, wenn Standby-Liste **und** freier RAM konfigurierbare Schwellwerte reißen. Standardmäßig aus — die App macht nichts ungefragt. |
+| 🎮 **Clean up for gaming** | Purges the Windows standby list via the native API (`NtSetSystemInformation`). That's the real ISLC/RAMMap mechanism — genuinely helps against micro-stutter when the standby cache has bloated up after long sessions. |
+| ✨ **Placebo mode** | Trims the working sets of all processes. Makes the Task Manager numbers pretty, does **not** make your PC faster — Windows shoves everything into Memory Compression and takes it right back. Built in as a joke and honestly labeled, because 95% of "RAM boosters" out there sell exactly *that* as their main feature. |
+| ❄ **Automatic (ISLC style)** | Optional: purges automatically when the standby list **and** free RAM cross configurable thresholds. Off by default — the app does nothing unasked. |
 
 ## Features
 
-- **RAM-Balken**, der die Wahrheit zeigt: In Benutzung / Standby / *wirklich* frei — nicht das schwammige „verfügbar"
-- **Top-12-Fresser-Liste mit zwei Spalten:** „Berührt" (Working Set inkl. geteilter DLLs) vs. „Besitzt" (privates Working Set — die Task-Manager-Zahl). Einmal verstehen, nie wieder wundern
-- **Vorher/Nachher** bei jeder Bereinigung: `Standby: 1.240 MB → 85 MB ✓`
-- **Tray-App:** Rechtsklick aufs Schneeflocken-Icon → bereinigen, ohne ein Fenster zu öffnen
-- **Optionales Mini-Overlay** (halbtransparent, ziehbar) mit Live-Werten
-- **Autostart** über die Aufgabenplanung — ohne UAC-Abfrage bei jedem Hochfahren
-- **Eigenverbrauch ~10–15 MB** — ein RAM-Tool sollte selbst keins fressen
+- **Bilingual (since v1.2):** English + German, starts in your Windows display language, switchable in the settings
+- **A RAM bar that tells the truth:** in use / standby / *truly* free — not the fuzzy "available"
+- **Top 12 RAM hogs with two columns:** "Touches" (working set incl. shared DLLs) vs. "Owns" (private working set — the Task Manager number). Understand it once, never wonder again
+- **Before/after** on every cleanup: `Standby: 1,240 MB → 85 MB ✓`
+- **Tray app:** right-click the snowflake icon → clean up without opening a window
+- **Optional mini overlay** (semi-transparent, draggable) with live values
+- **Autostart** via Task Scheduler — without a UAC prompt at every boot
+- **Own footprint ~10–15 MB** — a RAM tool shouldn't hog any itself
 
 ## Installation
 
-1. Neueste `Real_RAM_cooler_Setup_….exe` aus den [Releases](../../releases/latest) laden
-2. Setup ausführen → durchklicken → fertig
+1. Download the latest `Real_RAM_cooler_Setup_….exe` from the [Releases](../../releases/latest)
+2. Run the setup → click through → done
 
-> **⚠️ „Unbekannter Herausgeber" / SmartScreen?** Normal. Die App ist nicht code-signiert (Zertifikate kosten mehrere hundert € pro Jahr — das zahlt kein Open-Source-Hobbyprojekt). Der Quellcode liegt komplett offen in diesem Repo, du kannst jede Zeile lesen und die App selbst bauen. Bei der Warnung: **„Weitere Informationen" → „Trotzdem ausführen"**.
+> **⚠️ "Unknown publisher" / SmartScreen?** Normal. The app is not code-signed (certificates cost several hundred € per year — no open-source hobby project pays that). The full source code is right here in this repo; you can read every line and build the app yourself. At the warning: **"More info" → "Run anyway"**.
 
-> **🛡️ Admin-Rechte?** Ja, bei jedem Start (ein UAC-Klick). Windows erlaubt das Leeren der Standby-Liste nur mit Admin-Rechten — dieselbe Anforderung wie bei RAMMap und ISLC. Ohne geht's technisch nicht.
+> **🛡️ Admin rights?** Yes, at every start (one UAC click). Windows only allows purging the standby list with admin rights — the same requirement as RAMMap and ISLC. There is no way around it, technically.
 
-## Für Gamer — der 30-Sekunden-Guide 🎮
+## For gamers — the 30-second guide 🎮
 
-1. **Vor dem Zocken:** Rechtsklick auf die Schneeflocke im Tray → **„🎮 Fürs Gaming bereinigen"**. Fertig.
-2. **Bei langen Sessions** (oder wenn's nach 2–3 Stunden ruckelt): In den Einstellungen die **Automatik** aktivieren. Empfohlene Werte für 16 GB RAM: leeren wenn Standby > 1024 MB und frei < 1536 MB. Bei 32 GB kannst du beide Werte verdoppeln.
-3. **Kein Overlay im Spiel nötig** — die App arbeitet unsichtbar im Tray und frisst selbst fast nichts.
-4. **Ehrliche Erwartung:** Das Tool behebt Stutter durch vollgelaufenen Standby-Cache. Es macht keine FPS aus dünner Luft, übertaktet nichts und ersetzt kein RAM-Upgrade. Wer dir das verspricht, verkauft dir den Placebo-Button als Hauptfeature. 😉
+1. **Before playing:** right-click the snowflake in the tray → **"🎮 Clean up for gaming"**. Done.
+2. **On long sessions** (or when it stutters after 2–3 hours): enable **Automatic** in the settings. Recommended values for 16 GB RAM: purge when standby > 1024 MB and free < 1536 MB. With 32 GB, double both values.
+3. **No in-game overlay needed** — the app works invisibly in the tray and barely eats anything itself.
+4. **Honest expectations:** this tool fixes stutter caused by a bloated standby cache. It doesn't conjure FPS out of thin air, doesn't overclock anything, and doesn't replace a RAM upgrade. Anyone promising you that is selling you the placebo button as their main feature. 😉
 
-## Konfiguration
+## Configuration
 
-Alle Einstellungen liegen in der `config.json` neben der `.exe` (bei Installation: `C:\Program Files\Real_RAM_cooler\`). Über das ⚙-Menü einstellbar; ein Wert ist nur per Datei änderbar:
+All settings live in the `config.json` next to the `.exe` (when installed: `C:\Program Files\Real_RAM_cooler\`). Adjustable via the ⚙ menu; two values can also be changed in the file:
 
 ```json
-"overlay_alpha": 0.28
+"overlay_alpha": 0.28,
+"language": "auto"
 ```
 
-Deckkraft des Overlays — `0.15` = Geist 👻, `0.5` = halbtransparent, `1.0` = deckend. App neu starten, fertig.
+`overlay_alpha`: overlay opacity — `0.15` = ghost 👻, `1.0` = solid. `language`: `"auto"` (Windows language), `"de"` or `"en"`. Restart the app, done.
 
-## Selbst bauen (Open Source!)
+## Build it yourself (open source!)
 
 ```powershell
 pip install pystray pillow
-python real_ram_cooler.py --make-icon                    # erzeugt icon.ico
+python real_ram_cooler.py --make-icon                    # creates icon.ico
 python -m PyInstaller --onefile --noconsole --uac-admin --icon icon.ico --name Real_RAM_cooler real_ram_cooler.py
 ```
 
-Installer bauen: `setup.iss` mit [Inno Setup 6](https://jrsoftware.org/isinfo.php) kompilieren (Strg+F9).
+Build the installer: compile `setup.iss` with [Inno Setup 6](https://jrsoftware.org/isinfo.php) (Ctrl+F9).
 
 ## FAQ
 
-**Warum zeigt der Task-Manager andere Zahlen als die Spalte „Berührt"?**
-Der Task-Manager zeigt das *private* Working Set (nur eigene Seiten), „Berührt" zählt auch geteilte DLLs mit. Beide Zahlen stimmen — sie beantworten verschiedene Fragen. Die App zeigt deshalb beide.
+**Why does Task Manager show different numbers than the "Touches" column?**
+Task Manager shows the *private* working set (own pages only); "Touches" also counts shared DLLs. Both numbers are correct — they answer different questions. That's why the app shows both.
 
-**Nach dem Placebo-Button ist `Memory Compression` riesig — Bug?**
-Feature. Genau das passiert mit „getrimmtem" Speicher: Windows komprimiert ihn, statt ihn freizugeben. Der Button existiert, um das live zu demonstrieren.
+**After the placebo button, `Memory Compression` is huge — bug?**
+Feature. That's exactly what happens to "trimmed" memory: Windows compresses it instead of freeing it. The button exists to demonstrate this live.
 
-**Windows Defender mag die frisch gebaute .exe nicht?**
-Frische, unsignierte PyInstaller-Exes werden gern als False Positive geflaggt. Beim Selbstbauen: Projektordner vorher als Defender-Ausnahme eintragen.
+**Windows Defender doesn't like the freshly built .exe?**
+Fresh, unsigned PyInstaller exes are often flagged as false positives. When building yourself: add the project folder as a Defender exclusion first.
 
-**Funktioniert das auch mit 8 GB / 32 GB / 64 GB RAM?**
-Ja. Die Schwellwerte der Automatik sind Schieberegler — an die eigene RAM-Größe anpassen.
+**Does it work with 8 GB / 32 GB / 64 GB RAM?**
+Yes. The automatic thresholds are sliders — adjust them to your RAM size.
 
-## Lizenz
+## License
 
-MIT — nutzen, lesen, forken, verbessern. Siehe [LICENSE](LICENSE).
+MIT — use it, read it, fork it, improve it. See [LICENSE](LICENSE).
 
 ---
 
-*Gebaut in einer Nacht-Session von Dennis ([@Dennismit2n](https://github.com/Dennismit2n)) mit Claude — inklusive Live-Beweis, warum RAM-Booster Schlangenöl sind. Die App ist das Protokoll davon.* ❄💙
+*Built in one night session by Dennis ([@Dennismit2n](https://github.com/Dennismit2n)) with Claude — including live proof of why RAM boosters are snake oil. The app is the protocol of that night.* ❄💙
