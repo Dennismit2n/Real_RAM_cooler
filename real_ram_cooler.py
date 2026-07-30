@@ -585,6 +585,7 @@ def _enum_pids():
 
 _NICE_NAMES = {
     "memcompression": "Memory Compression",
+    "memory compression": "Memory Compression",  # Win 11 meldet den Namen mit Leerzeichen
     "msmpeng": "MsMpEng (Defender)",
     "dwm": t("niceDwm"),
 }
@@ -765,8 +766,8 @@ class RealRAMCooler:
         self.root = tk.Tk()
         self.root.title(f"{APP_NAME} ❄ v{VERSION}")
         self.root.configure(bg=C_BG)
-        self.root.geometry("560x640")
-        self.root.minsize(520, 600)
+        self.root.geometry("560x720")
+        self.root.minsize(520, 660)
         self.root.protocol("WM_DELETE_WINDOW", self.hide_dashboard)
         try:  # Fenster-Icon aus dem Tray-Bild
             from PIL import ImageTk
