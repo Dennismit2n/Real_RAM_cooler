@@ -766,8 +766,8 @@ class RealRAMCooler:
         self.root = tk.Tk()
         self.root.title(f"{APP_NAME} ❄ v{VERSION}")
         self.root.configure(bg=C_BG)
-        self.root.geometry("560x720")
-        self.root.minsize(520, 660)
+        self.root.geometry("610x770")
+        self.root.minsize(540, 700)
         self.root.protocol("WM_DELETE_WINDOW", self.hide_dashboard)
         try:  # Fenster-Icon aus dem Tray-Bild
             from PIL import ImageTk
@@ -859,6 +859,10 @@ class RealRAMCooler:
         self.lbl_self = tk.Label(self.root, text="", font=FONT_SMALL,
                                  bg=C_BG, fg=C_MUTED)
         self.lbl_self.pack(anchor="w", pady=(0, 10), **pad)
+
+        # Textzeilen wachsen mit der Fensterbreite mit — nichts wird
+        # mehr rechts abgeschnitten, egal wie schmal/breit gezogen wird.
+        self.root.bind("<Configure>", self._on_root_resize)
 
     # ── Overlay (optional, Usage-Ticker-Vibe) ────────────────────────
     def _build_overlay(self):
@@ -1103,6 +1107,17 @@ class RealRAMCooler:
         tk.Label(w, text=t("adminHint"),
                  font=FONT_SMALL, bg=C_BG, fg=C_MUTED, wraplength=420,
                  justify="left").pack(anchor="w", pady=(16, 0), **pad)
+
+    def _on_root_resize(self, e):
+        # Bindings am Toplevel feuern auch für Kinder (bindtags) —
+        # nur auf das Fenster selbst reagieren.
+        if e.widget is not self.root:
+            return
+        wide = max(300, e.width - 40)    # Banner + Fußnote (padx 16 je Seite)
+        self.banner.configure(wraplength=wide)
+        self.lbl_cookbook.configure(wraplength=wide)
+        self.lbl_legend.configure(wraplength=max(300, e.width - 60),
+                                  justify="left")
 
     # ── Anzeige-Aktualisierung ───────────────────────────────────────
     def refresh_now(self):
