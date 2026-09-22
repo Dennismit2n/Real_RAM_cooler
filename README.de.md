@@ -36,12 +36,12 @@
 
 > **⚠️ „Unbekannter Herausgeber" / SmartScreen?** Normal. Die App ist nicht code-signiert (Zertifikate kosten mehrere hundert € pro Jahr — das zahlt kein Open-Source-Hobbyprojekt). Der Quellcode liegt komplett offen in diesem Repo, du kannst jede Zeile lesen und die App selbst bauen. Bei der Warnung: **„Weitere Informationen" → „Trotzdem ausführen"**.
 
-> **🛡️ Admin-Rechte?** Ja, bei jedem Start (ein UAC-Klick). Windows erlaubt das Leeren der Standby-Liste nur mit Admin-Rechten — dieselbe Anforderung wie bei RAMMap und ISLC. Ohne geht's technisch nicht.
+> **🛡️ Admin-Rechte?** Ja, bei jedem Start (ein UAC-Klick). Windows erlaubt das Leeren der Standby-Liste nur mit Admin-Rechten — dieselbe Anforderung wie bei RAMMap und ISLC. Ohne geht’s technisch nicht.
 
 ## Für Gamer — der 30-Sekunden-Guide 🎮
 
 1. **Vor dem Zocken:** Rechtsklick auf die Schneeflocke im Tray → **„🎮 Fürs Gaming bereinigen"**. Fertig.
-2. **Bei langen Sessions** (oder wenn's nach 2–3 Stunden ruckelt): In den Einstellungen die **Automatik** aktivieren. Empfohlene Werte für 16 GB RAM: leeren wenn Standby > 1024 MB und frei < 1536 MB. Bei 32 GB kannst du beide Werte verdoppeln.
+2. **Bei langen Sessions** (oder wenn’s nach 2–3 Stunden ruckelt): In den Einstellungen die **Automatik** aktivieren. Empfohlene Werte für 16 GB RAM: leeren wenn Standby > 1024 MB und frei < 1536 MB. Bei 32 GB kannst du beide Werte verdoppeln.
 3. **Kein Overlay im Spiel nötig** — die App arbeitet unsichtbar im Tray und frisst selbst fast nichts.
 4. **Ehrliche Erwartung:** Das Tool behebt Stutter durch vollgelaufenen Standby-Cache. Es macht keine FPS aus dünner Luft, übertaktet nichts und ersetzt kein RAM-Upgrade. Wer dir das verspricht, verkauft dir den Placebo-Button als Hauptfeature. 😉
 
