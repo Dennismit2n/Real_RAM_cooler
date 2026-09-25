@@ -1108,6 +1108,10 @@ class RealRAMCooler:
                  font=FONT_SMALL, bg=C_BG, fg=C_MUTED, wraplength=420,
                  justify="left").pack(anchor="w", pady=(16, 0), **pad)
 
+        tk.Label(w, text="© 2026 Dennis_mit_2n",
+                 font=FONT_SMALL, bg=C_BG, fg=C_MUTED
+                 ).pack(anchor="w", pady=(10, 4), **pad)
+
     def _on_root_resize(self, e):
         # Bindings am Toplevel feuern auch für Kinder (bindtags) —
         # nur auf das Fenster selbst reagieren.
