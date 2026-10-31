@@ -4,7 +4,7 @@
 
 **An honest RAM tool for Windows.** Purges the standby list using the same mechanism as RAMMap and ISLC — the only thing that actually helps against gaming stutter caused by a bloated memory cache. No magic, no "boost", no promises Windows can’t keep.
 
-![Ice Blue Neon](https://img.shields.io/badge/Theme-Ice_Blue_Neon-66e0ff) ![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-3b82c4) ![Python](https://img.shields.io/badge/Python-3.9%2B-2b8fb3) ![Languages](https://img.shields.io/badge/Languages-EN%20%7C%20DE-8fd3f4) ![License](https://img.shields.io/badge/License-MIT-6ee7b7)
+![Ice Blue Neon](https://img.shields.io/badge/Theme-Ice_Blue_Neon-66e0ff) ![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-3b82c4) ![Python](https://img.shields.io/badge/Python-3.9%2B-2b8fb3) ![Languages](https://img.shields.io/badge/Languages-14-8fd3f4) ![License](https://img.shields.io/badge/License-MIT-6ee7b7)
 
 <img src="assets/screenshot-en.png" alt="Real_RAM_cooler dashboard: RAM bar (in use / standby / truly free), top 12 RAM hogs with the Touches vs. Owns columns" width="480">
 
@@ -20,7 +20,7 @@
 
 ## Features
 
-- **Bilingual (since v1.2):** English + German, starts in your Windows display language, switchable in the settings
+- **14 languages (since v1.3):** English, German, Spanish, French, Italian, Dutch, Polish, Portuguese, Turkish, Russian, Hindi, Chinese, Japanese and Korean; starts in your Windows display language, switchable in the settings
 - **A RAM bar that tells the truth:** in use / standby / *truly* free — not the fuzzy "available"
 - **Top 12 RAM hogs with two columns:** "Touches" (working set incl. shared DLLs) vs. "Owns" (private working set — the Task Manager number). Understand it once, never wonder again
 - **Before/after** on every cleanup: `Standby: 1,240 MB → 85 MB ✓`
@@ -54,7 +54,7 @@ All settings live in the `config.json` next to the `.exe` (when installed: `C:\P
 "language": "auto"
 ```
 
-`overlay_alpha`: overlay opacity — `0.15` = ghost 👻, `1.0` = solid. `language`: `"auto"` (Windows language), `"de"` or `"en"`. Restart the app, done.
+`overlay_alpha`: overlay opacity — `0.15` = ghost 👻, `1.0` = solid. `language`: `"auto"` (Windows language) or a language code such as `"de"`, `"en"`, `"es"`, `"ja"`. Restart the app, done.
 
 ## Build it yourself (open source!)
 

@@ -1,11 +1,11 @@
 ; ═══════════════════════════════════════════════════════════════════
 ;  Real_RAM_cooler — Installer-Skript für Inno Setup 6  ❄
 ;  Kompilieren: Datei in Inno Setup öffnen → Build → Compile (Strg+F9)
-;  Ergebnis:    installer\Real_RAM_cooler_Setup_v1.2.exe
+;  Ergebnis:    installer\Real_RAM_cooler_Setup_v1.3.exe
 ; ═══════════════════════════════════════════════════════════════════
 
 #define MyAppName "Real_RAM_cooler"
-#define MyAppVersion "1.2"
+#define MyAppVersion "1.3"
 #define MyAppPublisher "Dennis"
 #define MyAppExeName "Real_RAM_cooler.exe"
 
@@ -32,9 +32,20 @@ PrivilegesRequired=admin
 ArchitecturesInstallIn64BitMode=x64compatible
 
 [Languages]
-; Installer folgt der Windows-Sprache (Englisch als Standard/Fallback):
+; Installer folgt der Windows-Sprache (Englisch als Standard/Fallback).
+; Chinesisch und Hindi bringt Inno Setup nicht mit: dort zeigt das Setup Englisch, die App selbst spricht alle 14.
 Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "german"; MessagesFile: "compiler:Languages\German.isl"
+Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
+Name: "french"; MessagesFile: "compiler:Languages\French.isl"
+Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
+Name: "dutch"; MessagesFile: "compiler:Languages\Dutch.isl"
+Name: "polish"; MessagesFile: "compiler:Languages\Polish.isl"
+Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
+Name: "turkish"; MessagesFile: "compiler:Languages\Turkish.isl"
+Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
+Name: "japanese"; MessagesFile: "compiler:Languages\Japanese.isl"
+Name: "korean"; MessagesFile: "compiler:Languages\Korean.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; \

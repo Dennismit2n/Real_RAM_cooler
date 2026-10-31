@@ -4,7 +4,7 @@
 
 **Ein ehrliches RAM-Tool für Windows.** Leert die Standby-Liste mit demselben Mechanismus wie RAMMap und ISLC — das Einzige, was gegen Gaming-Stutter durch vollgelaufenen Speicher-Cache wirklich hilft. Kein Zauber, kein „Boost", keine Versprechen, die Windows nicht halten kann.
 
-![Eisblau Neon](https://img.shields.io/badge/Theme-Eisblau_Neon-66e0ff) ![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-3b82c4) ![Python](https://img.shields.io/badge/Python-3.9%2B-2b8fb3) ![Sprachen](https://img.shields.io/badge/Sprachen-DE%20%7C%20EN-8fd3f4) ![Lizenz](https://img.shields.io/badge/Lizenz-MIT-6ee7b7)
+![Eisblau Neon](https://img.shields.io/badge/Theme-Eisblau_Neon-66e0ff) ![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-3b82c4) ![Python](https://img.shields.io/badge/Python-3.9%2B-2b8fb3) ![Sprachen](https://img.shields.io/badge/Sprachen-14-8fd3f4) ![Lizenz](https://img.shields.io/badge/Lizenz-MIT-6ee7b7)
 
 <img src="assets/screenshot-de.png" alt="Real_RAM_cooler-Dashboard: RAM-Balken (in Benutzung / Standby / wirklich frei), Top-12 RAM-Fresser mit den Spalten Berührt und Besitzt" width="480">
 
@@ -20,7 +20,7 @@
 
 ## Features
 
-- **Zweisprachig (seit v1.2):** Deutsch + Englisch, startet automatisch in deiner Windows-Sprache, umschaltbar in den Einstellungen
+- **14 Sprachen (seit v1.3):** Deutsch, Englisch, Spanisch, Französisch, Italienisch, Niederländisch, Polnisch, Portugiesisch, Türkisch, Russisch, Hindi, Chinesisch, Japanisch und Koreanisch; startet automatisch in deiner Windows-Sprache, umschaltbar in den Einstellungen
 - **RAM-Balken**, der die Wahrheit zeigt: In Benutzung / Standby / *wirklich* frei — nicht das schwammige „verfügbar"
 - **Top-12-Fresser-Liste mit zwei Spalten:** „Berührt" (Working Set inkl. geteilter DLLs) vs. „Besitzt" (privates Working Set — die Task-Manager-Zahl). Einmal verstehen, nie wieder wundern
 - **Vorher/Nachher** bei jeder Bereinigung: `Standby: 1.240 MB → 85 MB ✓`
@@ -54,7 +54,7 @@ Alle Einstellungen liegen in der `config.json` neben der `.exe` (bei Installatio
 "language": "auto"
 ```
 
-`overlay_alpha`: Deckkraft des Overlays — `0.15` = Geist 👻, `1.0` = deckend. `language`: `"auto"` (Windows-Sprache), `"de"` oder `"en"`. App neu starten, fertig.
+`overlay_alpha`: Deckkraft des Overlays — `0.15` = Geist 👻, `1.0` = deckend. `language`: `"auto"` (Windows-Sprache) oder ein Sprachkürzel wie `"de"`, `"en"`, `"es"`, `"ja"`. App neu starten, fertig.
 
 ## Selbst bauen (Open Source!)
 
