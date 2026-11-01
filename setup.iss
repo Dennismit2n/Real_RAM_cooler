@@ -1,11 +1,11 @@
 ; ═══════════════════════════════════════════════════════════════════
 ;  Real_RAM_cooler — Installer-Skript für Inno Setup 6  ❄
 ;  Kompilieren: Datei in Inno Setup öffnen → Build → Compile (Strg+F9)
-;  Ergebnis:    installer\Real_RAM_cooler_Setup_v1.3.exe
+;  Ergebnis:    installer\Real_RAM_cooler_Setup_v1.3.1.exe
 ; ═══════════════════════════════════════════════════════════════════
 
 #define MyAppName "Real_RAM_cooler"
-#define MyAppVersion "1.3"
+#define MyAppVersion "1.3.1"
 #define MyAppPublisher "Dennis"
 #define MyAppExeName "Real_RAM_cooler.exe"
 
