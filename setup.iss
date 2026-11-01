@@ -1,11 +1,11 @@
 ; ═══════════════════════════════════════════════════════════════════
 ;  Real_RAM_cooler — Installer-Skript für Inno Setup 6  ❄
 ;  Kompilieren: Datei in Inno Setup öffnen → Build → Compile (Strg+F9)
-;  Ergebnis:    installer\Real_RAM_cooler_Setup_v1.3.1.exe
+;  Ergebnis:    installer\Real_RAM_cooler_Setup_v1.3.2.exe
 ; ═══════════════════════════════════════════════════════════════════
 
 #define MyAppName "Real_RAM_cooler"
-#define MyAppVersion "1.3.1"
+#define MyAppVersion "1.3.2"
 #define MyAppPublisher "Dennis"
 #define MyAppExeName "Real_RAM_cooler.exe"
 
@@ -25,7 +25,8 @@ SetupIconFile=icon.ico
 UninstallDisplayIcon={app}\{#MyAppExeName}
 Compression=lzma2
 SolidCompression=yes
-WizardStyle=modern
+; Immer dunkel, auch bei hellem Windows (Dennis' Wahl vom 01.11.2026)
+WizardStyle=modern dark
 ; Installer braucht Admin (schreibt nach Program Files) — passt zur
 ; App, die sowieso immer mit Admin-Rechten läuft (Entscheidung 4A):
 PrivilegesRequired=admin
@@ -33,7 +34,8 @@ ArchitecturesInstallIn64BitMode=x64compatible
 
 [Languages]
 ; Installer folgt der Windows-Sprache (Englisch als Standard/Fallback).
-; Hindi bringt Inno Setup nicht mit: dort zeigt das Setup Englisch, die App selbst spricht alle 14.
+; Hindi gibt es von Inno Setup nicht (nur eine inoffizielle Datei für 5.5.3). lang\Hindi.isl ist
+; eine eigene, maschinelle Übersetzung der Default.isl von 6.7.3.
 ; Chinesisch ist die offizielle Inno-Übersetzung aus github.com/jrsoftware/issrc (Files/Languages),
 ; sie liegt in lang\, weil Inno Setup 6.7 sie noch nicht mitbringt.
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -46,6 +48,7 @@ Name: "polish"; MessagesFile: "compiler:Languages\Polish.isl"
 Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
 Name: "turkish"; MessagesFile: "compiler:Languages\Turkish.isl"
 Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
+Name: "hindi"; MessagesFile: "lang\Hindi.isl"
 Name: "chinesesimplified"; MessagesFile: "lang\ChineseSimplified.isl"
 Name: "japanese"; MessagesFile: "compiler:Languages\Japanese.isl"
 Name: "korean"; MessagesFile: "compiler:Languages\Korean.isl"

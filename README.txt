@@ -1,5 +1,5 @@
 =====================================================================
-  Real_RAM_cooler v1.3.1  (Ice Blue Neon / Eisblau Neon)
+  Real_RAM_cooler v1.3.2  (Ice Blue Neon / Eisblau Neon)
   An honest RAM tool for Windows 10/11
   Ein ehrliches RAM-Tool fuer Windows 10/11
 =====================================================================
@@ -22,7 +22,7 @@ WHAT IT DOES
 
 INSTALLATION
 ------------
-1. Double-click Real_RAM_cooler_Setup_v1.3.1.exe
+1. Double-click Real_RAM_cooler_Setup_v1.3.2.exe
 2. Click through the wizard - done
 3. The app is in the Start menu (optional: desktop icon)
 
@@ -72,7 +72,7 @@ WAS ES MACHT
 
 INSTALLATION
 ------------
-1. Real_RAM_cooler_Setup_v1.3.1.exe doppelklicken
+1. Real_RAM_cooler_Setup_v1.3.2.exe doppelklicken
 2. Assistent durchklicken - fertig
 3. Die App liegt danach im Startmenue (optional: Desktop-Icon)
 
@@ -110,5 +110,5 @@ Nichts bleibt zurueck.
 =====================================================================
 MIT license - use, read, improve. / MIT-Lizenz - nutzen, lesen,
 verbessern.  Source: https://github.com/Dennismit2n/Real_RAM_cooler
-Built by Dennis (Dennismit2n) with Claude.          (v1.3.1, 2026)
+Built by Dennis (Dennismit2n) with Claude.          (v1.3.2, 2026)
 =====================================================================
