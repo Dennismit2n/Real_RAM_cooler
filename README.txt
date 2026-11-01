@@ -1,5 +1,5 @@
 =====================================================================
-  Real_RAM_cooler v1.2  (Ice Blue Neon / Eisblau Neon)
+  Real_RAM_cooler v1.3  (Ice Blue Neon / Eisblau Neon)
   An honest RAM tool for Windows 10/11
   Ein ehrliches RAM-Tool fuer Windows 10/11
 =====================================================================
@@ -17,12 +17,12 @@ WHAT IT DOES
   main feature. ;)
 * Automatic (optional, OFF by default): purges on its own when
   standby list and free RAM cross the thresholds.
-* Bilingual: starts in your Windows language (English/German),
-  switchable in the settings.
+* 14 languages: starts in your Windows language, switchable in
+  the settings.
 
 INSTALLATION
 ------------
-1. Double-click Real_RAM_cooler_Setup_v1.2.exe
+1. Double-click Real_RAM_cooler_Setup_v1.3.exe
 2. Click through the wizard - done
 3. The app is in the Start menu (optional: desktop icon)
 
@@ -67,12 +67,12 @@ WAS ES MACHT
   als Hauptfeature. ;)
 * Automatik (optional, standardmaessig AUS): leert selbststaendig,
   wenn Standby-Liste und freier RAM die Schwellwerte reissen.
-* Zweisprachig: startet in deiner Windows-Sprache (Deutsch/
-  Englisch), umschaltbar in den Einstellungen.
+* 14 Sprachen: startet in deiner Windows-Sprache, umschaltbar in
+  den Einstellungen.
 
 INSTALLATION
 ------------
-1. Real_RAM_cooler_Setup_v1.2.exe doppelklicken
+1. Real_RAM_cooler_Setup_v1.3.exe doppelklicken
 2. Assistent durchklicken - fertig
 3. Die App liegt danach im Startmenue (optional: Desktop-Icon)
 
@@ -110,5 +110,5 @@ Nichts bleibt zurueck.
 =====================================================================
 MIT license - use, read, improve. / MIT-Lizenz - nutzen, lesen,
 verbessern.  Source: https://github.com/Dennismit2n/Real_RAM_cooler
-Built by Dennis (Dennismit2n) with Claude.          (v1.2, 2026)
+Built by Dennis (Dennismit2n) with Claude.          (v1.3, 2026)
 =====================================================================

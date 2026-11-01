@@ -33,7 +33,9 @@ ArchitecturesInstallIn64BitMode=x64compatible
 
 [Languages]
 ; Installer folgt der Windows-Sprache (Englisch als Standard/Fallback).
-; Chinesisch und Hindi bringt Inno Setup nicht mit: dort zeigt das Setup Englisch, die App selbst spricht alle 14.
+; Hindi bringt Inno Setup nicht mit: dort zeigt das Setup Englisch, die App selbst spricht alle 14.
+; Chinesisch ist die offizielle Inno-Übersetzung aus github.com/jrsoftware/issrc (Files/Languages),
+; sie liegt in lang\, weil Inno Setup 6.7 sie noch nicht mitbringt.
 Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "german"; MessagesFile: "compiler:Languages\German.isl"
 Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
@@ -44,6 +46,7 @@ Name: "polish"; MessagesFile: "compiler:Languages\Polish.isl"
 Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
 Name: "turkish"; MessagesFile: "compiler:Languages\Turkish.isl"
 Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
+Name: "chinesesimplified"; MessagesFile: "lang\ChineseSimplified.isl"
 Name: "japanese"; MessagesFile: "compiler:Languages\Japanese.isl"
 Name: "korean"; MessagesFile: "compiler:Languages\Korean.isl"
 
