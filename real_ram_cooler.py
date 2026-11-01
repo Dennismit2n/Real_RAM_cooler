@@ -50,7 +50,7 @@ from pystray import MenuItem as TrayItem, Menu as TrayMenu
 from PIL import Image, ImageDraw
 
 APP_NAME = "Real_RAM_cooler"
-VERSION = "1.3.2"
+VERSION = "1.3.3"
 TASK_NAME = "Real_RAM_cooler_Autostart"
 
 # ═════════════════════════════════════════════════════════════════════

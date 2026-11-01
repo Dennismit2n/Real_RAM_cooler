@@ -1,11 +1,11 @@
 ; ═══════════════════════════════════════════════════════════════════
 ;  Real_RAM_cooler — Installer-Skript für Inno Setup 6  ❄
 ;  Kompilieren: Datei in Inno Setup öffnen → Build → Compile (Strg+F9)
-;  Ergebnis:    installer\Real_RAM_cooler_Setup_v1.3.2.exe
+;  Ergebnis:    installer\Real_RAM_cooler_Setup_v1.3.3.exe
 ; ═══════════════════════════════════════════════════════════════════
 
 #define MyAppName "Real_RAM_cooler"
-#define MyAppVersion "1.3.2"
+#define MyAppVersion "1.3.3"
 #define MyAppPublisher "Dennis"
 #define MyAppExeName "Real_RAM_cooler.exe"
 
@@ -36,10 +36,11 @@ ArchitecturesInstallIn64BitMode=x64compatible
 ; Installer folgt der Windows-Sprache (Englisch als Standard/Fallback).
 ; Hindi gibt es von Inno Setup nicht (nur eine inoffizielle Datei für 5.5.3). lang\Hindi.isl ist
 ; eine eigene, maschinelle Übersetzung der Default.isl von 6.7.3.
+; lang\GermanDu.isl ist das German.isl von 6.7.3 in Du-Form (Dennis' Wahl vom 01.11.2026).
 ; Chinesisch ist die offizielle Inno-Übersetzung aus github.com/jrsoftware/issrc (Files/Languages),
 ; sie liegt in lang\, weil Inno Setup 6.7 sie noch nicht mitbringt.
 Name: "english"; MessagesFile: "compiler:Default.isl"
-Name: "german"; MessagesFile: "compiler:Languages\German.isl"
+Name: "german"; MessagesFile: "lang\GermanDu.isl"
 Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
