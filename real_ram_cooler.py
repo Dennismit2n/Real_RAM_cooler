@@ -127,7 +127,7 @@ CFG = load_cfg()
 L = {
     "de": {
         "adminOk": "Admin ✓",
-        "adminNo": "kein Admin — nur Anzeige",
+        "adminNo": "kein Admin, nur Anzeige",
         "btnReal": "🎮  Fürs Gaming bereinigen",
         "btnPlacebo": "✨ Placebo",
         "tipPlacebo": ("Trimmt Working-Sets: macht die Zahlen im Task-Manager "
@@ -138,12 +138,12 @@ L = {
         "colCount": "Anz.",
         "colTouched": "Berührt",
         "colOwns": "Besitzt",
-        "cookbook": ("🍳 „Berührt“ = alles, was der Prozess nutzt — inklusive "
-                     "dem geteilten Kochbuch auf dem WG-Tisch (DLLs). "
+        "cookbook": ("🍳 „Berührt“ = alles, was der Prozess nutzt, auch "
+                     "das geteilte Kochbuch auf dem WG-Tisch (DLLs). "
                      "„Besitzt“ = nur seine eigenen Seiten (die Task-Manager-Zahl)."),
-        "ex2Fallback": ("* Dieses Windows liefert kein privates Working Set — "
-                        "Anzeige: Private Bytes (Commit)."),
-        "selfUse": ("Eigenverbrauch: {mb} MB — ein RAM-Tool sollte selbst "
+        "ex2Fallback": ("* Dieses Windows liefert kein privates Working Set, "
+                        "angezeigt werden Private Bytes (Commit)."),
+        "selfUse": ("Eigenverbrauch: {mb} MB, ein RAM-Tool sollte selbst "
                     "keins fressen. 😉"),
         "legendFull": ("● In Benutzung {used}   ● Standby {stby}   "
                        "● Wirklich frei {free}   (gesamt {total})"),
@@ -154,11 +154,11 @@ L = {
         "realDone": ("🎮 Standby-Liste geleert: {before} → {after} ✓  "
                      "({freed} fürs Spiel freigeräumt)"),
         "realDoneNoMeasure": "🎮 Standby-Liste geleert ✓ (Messung nicht verfügbar)",
-        "realFail": "Leeren fehlgeschlagen — fehlen Admin-Rechte?",
+        "realFail": "Leeren fehlgeschlagen, fehlen Admin-Rechte?",
         "notifyRealTitle": "Bereit fürs Gaming 🎮",
         "placeboDone": ("✨ Zahlen poliert: {n} Prozesse getrimmt, {delta} "
                         "„befreit“. Gefühlt schneller: 100 %. Messbar schneller: 0 %. "
-                        "(Windows räumt’s gleich zurück — grüß mir Memory "
+                        "(Windows räumt’s gleich zurück, grüß mir Memory "
                         "Compression. 😉)"),
         "needAdmin": ("Ohne Admin-Rechte erlaubt Windows das Leeren der "
                       "Standby-Liste nicht. Bitte die App als Administrator "
@@ -187,13 +187,13 @@ L = {
                       "das Leeren der Standby-Liste nur so erlaubt."),
         "secLang": "Sprache / Language",
         "langAuto": "Auto (Windows)",
-        "langSaved": "Sprache gespeichert — gilt ab dem nächsten Start der App.",
+        "langSaved": "Sprache gespeichert, gilt ab dem nächsten Start der App.",
         "alreadyRunning": "läuft bereits (Blick ins Tray ❄).",
         "niceDwm": "dwm (Desktopfenster)",
     },
     "en": {
         "adminOk": "Admin ✓",
-        "adminNo": "no admin — view only",
+        "adminNo": "no admin, view only",
         "btnReal": "🎮  Clean up for gaming",
         "btnPlacebo": "✨ Placebo",
         "tipPlacebo": ("Trims working sets: makes the Task Manager numbers "
@@ -205,12 +205,12 @@ L = {
         "colCount": "Cnt",
         "colTouched": "Touches",
         "colOwns": "Owns",
-        "cookbook": ("🍳 “Touches” = everything the process uses — including "
+        "cookbook": ("🍳 “Touches” = everything the process uses, including "
                      "the shared cookbook on the kitchen table (DLLs). "
                      "“Owns” = only its own pages (the Task Manager number)."),
         "ex2Fallback": ("* This Windows build doesn't report private working "
-                        "sets — showing Private Bytes (commit) instead."),
-        "selfUse": ("Own footprint: {mb} MB — a RAM tool shouldn't hog any "
+                        "sets, so it shows Private Bytes (commit) instead."),
+        "selfUse": ("Own footprint: {mb} MB, a RAM tool shouldn't hog any "
                     "itself. 😉"),
         "legendFull": ("● In use {used}   ● Standby {stby}   "
                        "● Truly free {free}   (total {total})"),
@@ -221,11 +221,11 @@ L = {
         "realDone": ("🎮 Standby list purged: {before} → {after} ✓  "
                      "({freed} cleared for your game)"),
         "realDoneNoMeasure": "🎮 Standby list purged ✓ (measurement unavailable)",
-        "realFail": "Purge failed — missing admin rights?",
+        "realFail": "Purge failed, missing admin rights?",
         "notifyRealTitle": "Ready for gaming 🎮",
         "placeboDone": ("✨ Numbers polished: {n} processes trimmed, {delta} "
                         "“freed”. Feels faster: 100%. Measurably faster: 0%. "
-                        "(Windows puts it all back in a second — say hi to "
+                        "(Windows puts it all back in a second, say hi to "
                         "Memory Compression. 😉)"),
         "needAdmin": ("Without admin rights Windows won't allow purging the "
                       "standby list. Please run the app as administrator."),
@@ -253,7 +253,7 @@ L = {
                       "allows purging the standby list that way."),
         "secLang": "Sprache / Language",
         "langAuto": "Auto (Windows)",
-        "langSaved": "Language saved — takes effect the next time the app starts.",
+        "langSaved": "Language saved, takes effect the next time the app starts.",
         "alreadyRunning": "is already running (check the tray ❄).",
         "niceDwm": "dwm (desktop windows)",
     },
