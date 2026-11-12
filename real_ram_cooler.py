@@ -33,6 +33,7 @@ import json
 import time
 import ctypes
 import threading
+import math
 import subprocess
 
 # ── Nur Windows ──────────────────────────────────────────────────────
@@ -47,10 +48,10 @@ from ctypes import wintypes, byref, sizeof
 
 import pystray
 from pystray import MenuItem as TrayItem, Menu as TrayMenu
-from PIL import Image, ImageDraw
+from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageTk
 
 APP_NAME = "Real_RAM_cooler"
-VERSION = "1.3.3"
+VERSION = "1.4.0"
 TASK_NAME = "Real_RAM_cooler_Autostart"
 
 # ═════════════════════════════════════════════════════════════════════
@@ -1313,6 +1314,184 @@ def fmt_gb(b):
         s = s.replace(".", ",")
     return s + " GB"
 
+# ═══════════════════════════════════════════════════════════════════
+#  BESCHLAG — der Look der Werkstatt: Karten mit runder Außenkante, darin
+#  ein eckiger Rahmen, an jeder Ecke eine kleine Schraube in Weißgold, jede
+#  anders gedreht. Licht von rechts oben, Schatten nach links unten.
+#  tkinter kennt weder Rundungen noch weiche Schatten: Jede Karte ist eine
+#  Zeichenfläche mit einem gerechneten Bild, ihr Inhalt liegt darauf.
+# ═══════════════════════════════════════════════════════════════════
+K_RADIUS = 12                          # Rundung der Karte
+K_INNEN = 5                            # Abstand des Rahmens von der Kante
+K_ABSTAND = 2                          # Abstand der Schraube vom Rahmen
+K_SCHRAUBE = 9                         # Größe einer Schraube
+K_RAND = K_INNEN + K_ABSTAND + K_SCHRAUBE   # so weit sitzt der Inhalt seitlich innen
+K_OBEN = K_INNEN + 3                   # oben und unten: knapp im Rahmen, zwischen den Schrauben
+K_SCHATTEN = (-5, 6)                   # Versatz: nach links unten
+K_WEICH = 5                            # Unschärfe des Schattens
+K_LUFT = 12                            # Platz für den Schatten links und unten
+K_WINKEL = (32, -58, 78, -14)          # Schlitz je Schraube, in Grad
+
+
+def _hex(farbe: str) -> tuple[int, int, int]:
+    return int(farbe[1:3], 16), int(farbe[3:5], 16), int(farbe[5:7], 16)
+
+
+def _mische(a: str, b: str, anteil: float) -> tuple[int, int, int]:
+    """Farbe a mit dem Anteil von b."""
+    x, y = _hex(a), _hex(b)
+    return tuple(round(x[i] + (y[i] - x[i]) * anteil) for i in range(3))
+
+
+def _verlauf(stufen, t: float):
+    """Wert eines Farbverlaufs an der Stelle t. stufen: (stelle, (r, g, b, deckung))"""
+    if t <= stufen[0][0]:
+        return stufen[0][1]
+    for (t0, f0), (t1, f1) in zip(stufen, stufen[1:]):
+        if t <= t1:
+            k = (t - t0) / ((t1 - t0) or 1)
+            return tuple(f0[i] + (f1[i] - f0[i]) * k for i in range(4))
+    return stufen[-1][1]
+
+
+_KOPF = ((0.0, (255, 255, 255, 1)), (0.2, (255, 252, 238, 1)), (0.5, (241, 228, 188, 1)),
+         (0.8, (196, 169, 100, 1)), (1.0, (122, 98, 38, 1)))
+_RING = ((0.0, (138, 106, 34, .55)), (0.5, (255, 243, 196, 0)), (1.0, (255, 251, 234, .7)))
+_SCHRAUBEN: dict = {}
+
+
+def schraube(winkel: float, groesse: int = K_SCHRAUBE):
+    """Eine Schraube in Weißgold, Punkt für Punkt gerechnet: Schatten nach
+    links unten, gewölbter Kopf, Schlitz im Winkel, Glanzpunkt rechts oben.
+    Dieselbe Zeichnung wie auf der Startseite, dort als SVG auf 12 × 12."""
+    if (winkel, groesse) in _SCHRAUBEN:
+        return _SCHRAUBEN[(winkel, groesse)]
+    n = groesse * 6                    # sechsfach gerechnet, dann verkleinert: glatte Kanten
+    co, si = math.cos(math.radians(-winkel)), math.sin(math.radians(-winkel))
+    gc, gs = math.cos(math.radians(35)), math.sin(math.radians(35))
+    punkte = []
+
+    def strich(x, y, x0, x1, y0):
+        """Abstand zu einer waagrechten Strecke mit runden Enden"""
+        return math.hypot(x - max(x0, min(x1, x)), y - y0)
+
+    for j in range(n):
+        v = (j + .5) * 12 / n
+        for i in range(n):
+            u = (i + .5) * 12 / n
+            r = g = b = a = 0.0        # Farbe mal Deckung, wird Schicht für Schicht belegt
+
+            def auf(farbe, deckung):
+                nonlocal r, g, b, a
+                r = farbe[0] * deckung + r * (1 - deckung)
+                g = farbe[1] * deckung + g * (1 - deckung)
+                b = farbe[2] * deckung + b * (1 - deckung)
+                a = deckung + a * (1 - deckung)
+
+            # Schatten der Schraube auf der Platte
+            if math.hypot(u - 5.1, v - 6.9) <= 5:
+                t = math.hypot(u - 4.3, v - 7.7) / 5
+                auf((0, 0, 0), .6 if t <= .55 else max(0.0, .6 * (1 - (t - .55) / .45)))
+            m = math.hypot(u - 6, v - 6)
+            # Kopf, heller Fleck rechts oben
+            if m <= 4.3:
+                f = _verlauf(_KOPF, math.hypot(u - 7.376, v - 4.28) / 6.708)
+                auf(f, 1)
+            # dunkle Kante
+            if abs(m - 4.3) <= .225:
+                auf((85, 62, 12), .6)
+            # feiner Ring: oben rechts dunkel, unten links hell
+            if abs(m - 2.9) <= .25:
+                f = _verlauf(_RING, ((8.9 - u) / 5.8 + (v - 3.1) / 5.8) / 2)
+                auf(f, f[3])
+            # Schlitz und sein heller Rand
+            x = 6 + (u - 6) * co - (v - 6) * si
+            y = 6 + (u - 6) * si + (v - 6) * co
+            if strich(x, y, 2.5, 9.5, 6) <= .6:
+                auf((58, 42, 7), 1)
+            if strich(x, y, 2.7, 9.3, 6.62) <= .15:
+                auf((255, 247, 218), .75)
+            # Glanzpunkt
+            ex = (u - 7.7) * gc - (v - 3.9) * gs
+            ey = (u - 7.7) * gs + (v - 3.9) * gc
+            if (ex / 1.05) ** 2 + (ey / .6) ** 2 <= 1:
+                auf((255, 255, 255), .9)
+            punkte.append((round(r), round(g), round(b), round(a * 255)))
+
+    bild = Image.new("RGBa", (n, n))
+    bild.putdata(punkte)
+    bild = bild.resize((groesse, groesse), Image.LANCZOS).convert("RGBA")
+    _SCHRAUBEN[(winkel, groesse)] = bild
+    return bild
+
+
+def kasten_bild(w: int, h: int):
+    """Das Bild einer Karte auf w × h Punkten: links und unten bleibt Platz
+    für den Schatten, der Rest ist die Karte mit Rahmen und Schrauben."""
+    ph = h - K_LUFT
+    k = 4                              # vierfach zeichnen, dann verkleinern
+    kante = [K_LUFT * k, 0, w * k - 1, ph * k - 1]
+    form = Image.new("L", (w * k, h * k), 0)
+    ImageDraw.Draw(form).rounded_rectangle(kante, radius=K_RADIUS * k, fill=255)
+    gross = Image.new("RGB", (w * k, h * k), _hex(C_PANEL))
+    d = ImageDraw.Draw(gross)
+    d.rounded_rectangle(kante, radius=K_RADIUS * k, width=k,
+                        outline=_mische(C_PANEL, C_ACCENT_D, .55))
+    d.rectangle([(K_LUFT + K_INNEN) * k, K_INNEN * k,
+                 (w - K_INNEN) * k - 1, (ph - K_INNEN) * k - 1],
+                width=k, outline=_mische(C_PANEL, C_ACCENT_D, .75))
+    karte = gross.resize((w, h), Image.LANCZOS)
+    form = form.resize((w, h), Image.LANCZOS)
+
+    schatten = ImageChops.offset(form, K_SCHATTEN[0], K_SCHATTEN[1])
+    schatten = schatten.filter(ImageFilter.GaussianBlur(K_WEICH)).point(lambda v: int(v * .7))
+    bild = Image.composite(Image.new("RGB", (w, h), (0, 0, 0)),
+                           Image.new("RGB", (w, h), _hex(C_BG)), schatten)
+    bild.paste(karte, (0, 0), form)
+    bild = bild.convert("RGBA")
+    links = K_LUFT + K_INNEN + K_ABSTAND
+    rechts = w - K_INNEN - K_ABSTAND - K_SCHRAUBE
+    oben = K_INNEN + K_ABSTAND
+    unten = ph - K_INNEN - K_ABSTAND - K_SCHRAUBE
+    for (x, y), winkel in zip(((links, oben), (rechts, oben), (links, unten), (rechts, unten)),
+                              K_WINKEL):
+        bild.alpha_composite(schraube(winkel), (x, y))
+    return bild.convert("RGB")
+
+
+class Beschlagkasten(tk.Canvas):
+    """Eine Karte mit Beschlag. Der Inhalt kommt in `innen`. Ohne `dehnbar`
+    richtet sich die Höhe nach dem Inhalt, mit `dehnbar` füllt die Karte den
+    Platz, den sie bekommt."""
+
+    def __init__(self, eltern, dehnbar=False):
+        super().__init__(eltern, bg=C_BG, highlightthickness=0, bd=0, height=80)
+        self.innen = tk.Frame(self, bg=C_PANEL)
+        self._fenster = self.create_window(K_LUFT + K_RAND, K_OBEN,
+                                           window=self.innen, anchor="nw")
+        self._dehnbar = dehnbar
+        self._mass = None
+        self._bild = None
+        self.bind("<Configure>", self._neu)
+        if not dehnbar:
+            self.innen.bind("<Configure>", self._hoehe)
+
+    def _hoehe(self, e):
+        self.configure(height=e.height + 2 * K_OBEN + K_LUFT)
+
+    def _neu(self, e):
+        w, h = e.width, e.height
+        self.itemconfigure(self._fenster, width=max(10, w - K_LUFT - 2 * K_RAND))
+        if self._dehnbar:
+            self.itemconfigure(self._fenster, height=max(10, h - K_LUFT - 2 * K_OBEN))
+        if (w, h) == self._mass or w < 80 or h < 60:
+            return
+        self._mass = (w, h)
+        self._bild = ImageTk.PhotoImage(kasten_bild(w, h))
+        self.delete("grund")
+        self.create_image(0, 0, image=self._bild, anchor="nw", tags="grund")
+
+
 class Tooltip:
     """Winziger Tooltip fürs ehrliche Placebo-Label."""
     def __init__(self, widget, text):
@@ -1401,24 +1580,27 @@ class RealRAMCooler:
         self.lbl_admin.pack(side="right")
 
         # RAM-Balken
-        barbox = tk.Frame(self.root, bg=C_PANEL, highlightthickness=1,
-                          highlightbackground=C_ACCENT_D)
-        barbox.pack(fill="x", pady=(6, 4), **pad)
+        # Karten mit Beschlag: links und unten brauchen sie Platz für den
+        # Schatten, darum der kleinere Abstand links.
+        kpad = {"padx": (16 - K_LUFT, 16)}
+        barkasten = Beschlagkasten(self.root)
+        barkasten.pack(fill="x", pady=(6, 0), **kpad)
+        barbox = barkasten.innen
         self.bar = tk.Canvas(barbox, height=30, bg=C_PANEL,
                              highlightthickness=0)
-        self.bar.pack(fill="x", padx=10, pady=(10, 4))
+        self.bar.pack(fill="x", pady=(4, 4))
         self.lbl_legend = tk.Label(barbox, text="", font=FONT_SMALL,
                                    bg=C_PANEL, fg=C_MUTED)
-        self.lbl_legend.pack(anchor="w", padx=10, pady=(0, 8))
+        self.lbl_legend.pack(anchor="w", pady=(0, 2))
 
         # Vorher/Nachher-Banner (erscheint nach jeder Bereinigung)
         self.banner = tk.Label(self.root, text="", font=FONT_BOLD, bg=C_BG,
                                fg=C_GOOD, wraplength=520, justify="left")
-        self.banner.pack(fill="x", pady=(2, 2), **pad)
+        self.banner.pack(fill="x", pady=(0, 0), **pad)
 
         # Buttons
         btns = tk.Frame(self.root, bg=C_BG)
-        btns.pack(fill="x", pady=(4, 8), **pad)
+        btns.pack(fill="x", pady=(2, 8), **pad)
 
         self.btn_real = tk.Button(
             btns, text=t("btnReal"),
@@ -1449,14 +1631,14 @@ class RealRAMCooler:
             self.btn_placebo.configure(state="disabled")
 
         # Prozess-Tabelle
-        tablebox = tk.Frame(self.root, bg=C_PANEL, highlightthickness=1,
-                            highlightbackground=C_ACCENT_D)
-        tablebox.pack(fill="both", expand=True, pady=(2, 6), **pad)
+        tabkasten = Beschlagkasten(self.root, dehnbar=True)
+        tabkasten.pack(fill="both", expand=True, pady=(2, 0), **kpad)
+        tablebox = tabkasten.innen
         tk.Label(tablebox, text=t("topList"), font=FONT_BOLD,
-                 bg=C_PANEL, fg=C_TEXT).pack(anchor="w", padx=10,
-                                             pady=(8, 2))
+                 bg=C_PANEL, fg=C_TEXT).pack(anchor="w", padx=3,
+                                             pady=(2, 2))
         self.table = tk.Frame(tablebox, bg=C_PANEL)
-        self.table.pack(fill="both", expand=True, padx=10, pady=(0, 8))
+        self.table.pack(fill="both", expand=True, padx=3, pady=(0, 0))
 
         # Fußnoten: Kochbuch 🍳 + Eigenverbrauch
         self.lbl_cookbook = tk.Label(
@@ -1737,7 +1919,7 @@ class RealRAMCooler:
         wide = max(300, e.width - 40)    # Banner + Fußnote (padx 16 je Seite)
         self.banner.configure(wraplength=wide)
         self.lbl_cookbook.configure(wraplength=wide)
-        self.lbl_legend.configure(wraplength=max(300, e.width - 60),
+        self.lbl_legend.configure(wraplength=max(300, e.width - 64),
                                   justify="left")
 
     # ── Anzeige-Aktualisierung ───────────────────────────────────────
